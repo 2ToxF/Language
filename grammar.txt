@@ -1,15 +1,11 @@
 G         ::= {FUNC_DEF | VAR_DEF} {'@' {FUNC_DEF | VAR_DEF}}* '?'
 
-FUNC_DEF  ::= "менеджер" FUNC_ID '<'[VAR_ID] {, VAR_ID}*'>' {OP}*
-FUNC_ID   ::= ID
-ID        ::= ['a'-'z''A'-'Z'] ['a'-'z''A'-'Z''0'-'9']*
-OP        ::= {'чекни' COND_BODY} | {'пробегись' COND_BODY} | {VAR_ID = E '~'}
+FUNC_DEF  ::= "КАЙФОЛОМ" FUNC_ID '<'{VAR_ID}? {',' VAR_ID}*'>' {OP}*
+OP        ::= {"ЧЕКНИ" COND_BODY} | {"ПРОБЕГИСЬ" COND_BODY} | {"НАПЕЧАТАЙ_ПЖ" '<' E '>' '~'} | {VAR_ID = E '~'}
 COND_BODY ::= '<' E '>' '\' {OP}* '/'
 
-VAR_DEF   ::= "работник" VAR_ID = E
-VAR_ID    ::= ID
+VAR_DEF   ::= "РАБОТЯГА" VAR_ID = E
 
 E         ::= T {['+''-'] E}*
-T         ::= P {['+''-'] T}*
-P         ::= '(' E ')' | N | FUNC_ID '<'[E] {, E}*'>'| VAR_ID
-N         ::= {'-'}? ['0'-'9']+ {.['0'-'9']+}?
+T         ::= P {['*''/'] T}*
+P         ::= {'('E')'} | NUMBER | "ПРОЧИТАЙ_ПЖ" | {FUNC_ID '<'{E}? {',' E}*'>'} | VAR_ID
