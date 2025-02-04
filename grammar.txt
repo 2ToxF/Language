@@ -1,11 +1,18 @@
-G         ::= {FUNC_DEF | VAR_DEF} {'@' {FUNC_DEF | VAR_DEF}}* '?'
+G         ::= {FUNC_DEF | VAR_DEF} {FUNC_DEF | VAR_DEF}* '!'
 
-FUNC_DEF  ::= "КАЙФОЛОМ" FUNC_ID '<'{VAR_ID}? {',' VAR_ID}*'>' {OP}*
-OP        ::= {"ЧЕКНИ" COND_BODY} | {"ПРОБЕГИСЬ" COND_BODY} | {"НАПЕЧАТАЙ_ПЖ" '<' E '>' '~'} | {VAR_ID = E '~'}
-COND_BODY ::= '<' E '>' '\' {OP}* '/'
+FUNC_DEF  ::= "насяльника" FUNC_ID '<'{VAR_ID}? {',' VAR_ID}*'>' {OP}*
+VAR_DEF   ::= "работяга" VAR_ID = E
+OP        ::= {"чекни" COND BODY "неповезло" BODY} | {"зациклись" COND_BODY} | {"печатка" '<'E'>' '~'} | {VAR_ID = E '~'}
 
-VAR_DEF   ::= "РАБОТЯГА" VAR_ID = E
+COND ::= '<' LAND '>'
+BODY ::= '\' {OP}* '/'
 
-E         ::= T {['+''-'] E}*
-T         ::= P {['*''/'] T}*
-P         ::= {'('E')'} | NUMBER | "ПРОЧИТАЙ_ПЖ" | {FUNC_ID '<'{E}? {',' E}*'>'} | VAR_ID
+LAND ::= LOR {['и'] LAND}?
+LOR  ::= LNOT {['или'] LOR}?
+LNOT ::= LCMP {['не'] LNOT}?
+LP   ::= {'('LAND')} | LCMP
+LCMP ::= E {['==''<>''<''>''<=''>='] E}?
+
+E ::= T {['+''-'] E}?
+T ::= P {['*''/'] T}?
+P ::= {'('E')'} | NUMBER | "стырь" | {FUNC_ID '<'{E}? {',' E}*'>'} | VAR_ID
